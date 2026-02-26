@@ -99,6 +99,10 @@ export const sidebarNav: SidebarSection[] = [
         href: '/docs/routes-d/wallet-connect',
       },
       {
+        title: 'POST /api/batch',
+        href: '/docs/routes-d/batch',
+      },
+      {
         title: 'GET /api/assets/search',
         href: '/docs/routes-d/assets-search',
       },
@@ -109,6 +113,10 @@ export const sidebarNav: SidebarSection[] = [
       {
         title: 'POST /api/offers/create',
         href: '/docs/routes-d/offers-create',
+      },
+      {
+        title: '/api/liquidity-pools',
+        href: '/docs/routes-d/liquidity-pools',
       },
       {
         title: 'POST /api/path-payment/find',
@@ -127,8 +135,16 @@ export const sidebarNav: SidebarSection[] = [
         href: '/docs/routes-d/soroban-invoke',
       },
       {
+        title: 'GET /api/soroban/events',
+        href: '/docs/routes-d/soroban-events',
+      },
+      {
         title: 'POST /api/transactions/submit',
         href: '/docs/routes-d/transaction-submit',
+      },
+      {
+        title: 'GET /api/account/[address]',
+        href: '/docs/routes-d/account-lookup',
       },
     ],
   },
@@ -144,6 +160,7 @@ export const sidebarNav: SidebarSection[] = [
       { title: 'BalanceCard', href: '/docs/components/balance-card' },
       { title: 'TransactionList', href: '/docs/components/transaction-list' },
       { title: 'PaymentForm', href: '/docs/components/payment-form' },
+      { title: 'useWindowSize', href: '/docs/components/use-window-size' },
     ],
   },
 ];

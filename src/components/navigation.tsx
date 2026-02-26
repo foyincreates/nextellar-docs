@@ -3,8 +3,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useToggle } from '@/hooks-d/use-toggle';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ModeToggle } from '@/components/mode-toggle';
 
 const routes = [
   { name: 'Docs', path: '/docs' },
@@ -14,7 +16,7 @@ const routes = [
 ];
 
 const NavigationBar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, { toggle, off: closeMenu }] = useToggle(false);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-black">
@@ -34,7 +36,7 @@ const NavigationBar = () => {
                 transition={{ duration: 0.2 }}
               >
                 <Image
-                  src="/logos/logo-with-text-light.png"
+                  src="/logos/logo-with-text-dark.png"
                   width={150}
                   height={40}
                   alt="Nextellar"
@@ -42,7 +44,7 @@ const NavigationBar = () => {
                   priority
                 />
                 <Image
-                  src="/logos/logo-with-text-dark.png"
+                  src="/logos/logo-with-text-light.png"
                   width={150}
                   height={40}
                   alt="Nextellar"
@@ -69,17 +71,20 @@ const NavigationBar = () => {
               ))}
             </ul>
 
-            {/* Get Started Button */}
-            <Link href="/docs/getting-started/introduction">
-              <motion.button
-                className="text-white text-sm lg:text-base font-medium px-5 lg:px-6 py-2.5 lg:py-3 bg-black dark:bg-white dark:text-black"
-                whileHover={{ scale: 1.02, opacity: 0.9 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.2 }}
-              >
-                Get Started
-              </motion.button>
-            </Link>
+            {/* Get Started Button + Theme Toggle */}
+            <div className="flex items-center gap-4">
+              <ModeToggle />
+              <Link href="/docs/getting-started/introduction">
+                <motion.button
+                  className="text-white text-sm lg:text-base font-medium px-5 lg:px-6 py-2.5 lg:py-3 bg-black dark:bg-white dark:text-black"
+                  whileHover={{ scale: 1.02, opacity: 0.9 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  Get Started
+                </motion.button>
+              </Link>
+            </div>
           </div>
         </nav>
 
@@ -110,37 +115,40 @@ const NavigationBar = () => {
             />
           </Link>
 
-          {/* Mobile Menu Button */}
-          <motion.button
-            className="p-2 text-black dark:text-white"
-            onClick={() => setIsOpen(!isOpen)}
-            whileTap={{ scale: 0.95 }}
-            aria-label={isOpen ? 'Close menu' : 'Open menu'}
-          >
-            <AnimatePresence mode="wait">
-              {isOpen ? (
-                <motion.div
-                  key="close"
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <X className="w-6 h-6" />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="menu"
-                  initial={{ rotate: 90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: -90, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <Menu className="w-6 h-6" />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.button>
+          {/* Mobile Menu Button + Theme Toggle */}
+          <div className="flex items-center gap-2">
+            <ModeToggle />
+            <motion.button
+              className="p-2 text-black dark:text-white"
+              onClick={toggle}
+              whileTap={{ scale: 0.95 }}
+              aria-label={isOpen ? 'Close menu' : 'Open menu'}
+            >
+              <AnimatePresence mode="wait">
+                {isOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <X className="w-6 h-6" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="menu"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Menu className="w-6 h-6" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.button>
+          </div>
         </div>
 
         {/* Mobile Menu Dropdown */}
@@ -164,7 +172,7 @@ const NavigationBar = () => {
                   >
                     <Link
                       href={path}
-                      onClick={() => setIsOpen(false)}
+                      onClick={closeMenu}
                       className="block px-4 py-3 text-base font-medium text-black/70 dark:text-white/70 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
                     >
                       {name}
@@ -180,7 +188,7 @@ const NavigationBar = () => {
                 >
                   <Link
                     href="/docs/getting-started/introduction"
-                    onClick={() => setIsOpen(false)}
+                    onClick={closeMenu}
                     className="block w-full text-white text-center font-medium px-5 py-3 bg-black dark:bg-white dark:text-black"
                   >
                     Get Started
