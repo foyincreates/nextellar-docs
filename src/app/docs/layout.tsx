@@ -49,7 +49,7 @@ export default function DocsLayout({
               className="w-auto h-auto"
               logo={
                 <Image
-                  alt="logo"
+                  alt="Nextellar Documentation Logo Light"
                   className={' w-44  object-contain dark:hidden'}
                   width={188}
                   height={100}
@@ -61,7 +61,7 @@ export default function DocsLayout({
               className="w-auto h-auto"
               logo={
                 <Image
-                  alt="logo"
+                  alt="Nextellar Documentation Logo Dark"
                   className={' w-44  hidden object-contain dark:block'}
                   width={188}
                   height={100}
